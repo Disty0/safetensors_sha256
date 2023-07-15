@@ -12,9 +12,7 @@ parser.add_argument(
 )
 opt = parser.parse_args()
 
-if opt.model is not None:
-    sd_model = {}
-    with safe_open(opt.model, framework="pt", device="cpu") as f:
-        for key in f.keys():
-            hashed_line = hashlib.sha256(str(f.get_tensor(key)).encode('utf-8')).hexdigest()
-            print(f"{key}: {hashed_line}")
+with safe_open(opt.model, framework="pt", device="cpu") as f:
+    for key in f.keys():
+        hashed_line = hashlib.sha256(str(f.get_tensor(key)).encode('utf-8')).hexdigest()
+        print(f"{key}: {hashed_line}")
